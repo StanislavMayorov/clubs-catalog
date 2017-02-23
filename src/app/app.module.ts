@@ -4,6 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { AngularFireModule } from "angularfire2";
+
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyCN-TzDcXnAPdxZc5elol4le0jIO0R6Uvg",
+  authDomain: "clubs-catalog-38d0b.firebaseapp.com",
+  databaseURL: "https://clubs-catalog-38d0b.firebaseio.com",
+  storageBucket: "clubs-catalog-38d0b.appspot.com",
+  messagingSenderId: "885759704939"
+};
 
 @NgModule({
   declarations: [
@@ -12,9 +22,11 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
