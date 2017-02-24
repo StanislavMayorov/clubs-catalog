@@ -1,3 +1,40 @@
-<p>
-  create-club works!
-</p>
+<section class="container">
+  <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-xs-12">
+    <section>
+      <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text"
+                 class="form-control"
+                 required
+                 id="name"
+                 name="name"
+                 [ngModel]="club.name"
+
+          >
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea type="text"
+                    class="form-control"
+                    required
+                    id="description"
+                    rows="5"
+                    name="description"
+                    [ngModel]="club.description"
+
+          ></textarea>
+        </div>
+        <div class="form-group">
+        <label class="custom-file">
+          <input type="file" id="file" class="custom-file-input" name="file"
+                 accept="image/*" (change)="fileChange($event)" [ngModel]="file">
+          <span class="custom-file-control">{{ fileName }}</span>
+        </label>
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="!form.valid">Save</button>
+      </form>
+    </section>
+  </div>
+</section>
