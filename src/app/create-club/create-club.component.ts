@@ -1,8 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { NgForm } from "@angular/forms";
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
-import { FirebaseApp } from 'angularfire2';
 import { Club } from "../shared/club";
+import { FirebaseService } from "../shared/firebase.service";
 
 @Component({
   selector: 'app-create-club',
@@ -11,20 +10,16 @@ import { Club } from "../shared/club";
 })
 export class CreateClubComponent implements OnInit {
   fileName: string;
-  file: any;
-  items: FirebaseListObservable<any[]>;
-  firebaseApp: any;
+  file: File;
   club: Club;
 
-  constructor(private af: AngularFire, @Inject(FirebaseApp) firebaseApp: any) {
-    this.firebaseApp = firebaseApp;
+  constructor(private firebaseService: FirebaseService) {
     this.club = new Club('', '');
     this.file = null;
   }
 
   ngOnInit() {
     this.fileName = 'Choose file...';
-    this.items = this.af.database.list('/clubs');
   }
 
 
@@ -32,12 +27,7 @@ export class CreateClubComponent implements OnInit {
     debugger;
     if (form.valid && this.file) {
       const newClub = new Club(form.value.name, form.value.description);
-      const uniqueID = this.items.push(newClub).key;
-
-      const fileExtension = this.file.name.split('.').pop();
-      const fileRef = 'images/' + uniqueID + '.' + fileExtension;
-      const storageRef = this.firebaseApp.storage().ref(fileRef);
-      storageRef.put(this.file);
+      this.firebaseService.createClub(newClub, this.file);
     }
   }
 
