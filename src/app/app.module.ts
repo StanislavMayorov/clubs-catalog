@@ -6,6 +6,10 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from "angularfire2";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { HeaderComponent } from './header/header.component';
+import { ClubsListComponent } from './clubs-list/clubs-list.component';
+import { ClubDetailComponent } from './club-detail/club-detail.component';
+import { CreateClubComponent } from './create-club/create-club.component';
 
 
 export const firebaseConfig = {
@@ -18,7 +22,11 @@ export const firebaseConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    ClubsListComponent,
+    ClubDetailComponent,
+    CreateClubComponent
   ],
   imports: [
     BrowserModule,
