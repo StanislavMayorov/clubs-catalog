@@ -14,9 +14,11 @@
 <!--<input id="file" type="file" name="logo" accept="image/*">-->
 <!--<button (click)="upload()"></button>-->
 
+<div class="container">
+  <app-header></app-header>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+</div>
 
-<app-header></app-header>
-<main class="container">
-  <router-outlet></router-outlet>
-</main>
 
