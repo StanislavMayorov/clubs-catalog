@@ -10,12 +10,12 @@ import { FirebaseService } from "../shared/firebase.service";
 })
 export class CreateClubComponent implements OnInit {
   fileName: string;
-  file: File;
+  //file: File;
   club: Club;
 
   constructor(private firebaseService: FirebaseService) {
-    this.club = new Club('', '');
-    this.file = null;
+    this.club = new Club('', '', null);
+   // this.file = null;
   }
 
   ngOnInit() {
@@ -24,16 +24,15 @@ export class CreateClubComponent implements OnInit {
 
 
   onSubmit(form: NgForm) {
-    debugger;
-    if (form.valid && this.file) {
-      const newClub = new Club(form.value.name, form.value.description);
-      this.firebaseService.createClub(newClub, this.file);
+    if (form.valid && this.club.file) {
+      const newClub = new Club(form.value.name, form.value.description, this.club.file);
+      this.firebaseService.createClub(newClub);
     }
   }
 
   fileChange(fileInputEvent: any){
     this.fileName = fileInputEvent.currentTarget.files[0].name;
-    this.file = fileInputEvent.currentTarget.files[0];
+    this.club.file = fileInputEvent.currentTarget.files[0];
   }
 
 }

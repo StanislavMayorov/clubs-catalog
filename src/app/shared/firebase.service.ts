@@ -13,9 +13,9 @@ export class FirebaseService {
     this.clubs = this.af.database.list('/clubs');
   }
 
-  createClub(club: Club, file: File){
-    const uniqueID = this.clubs.push(club).key;
-    this.uploadFile(file, uniqueID);
+  createClub(club: Club){
+    const uniqueID = this.clubs.push({ name: club.name, description: club.description}).key;
+    this.uploadFile(club.file, uniqueID);
   }
 
   private uploadFile(file: File, name: string){
