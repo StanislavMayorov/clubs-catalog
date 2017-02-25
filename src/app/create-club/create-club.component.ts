@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { NgForm } from "@angular/forms";
+import { NgForm, Form, FormGroup, FormControl, Validators } from "@angular/forms";
 import { Club } from "../shared/club";
 import { FirebaseService } from "../shared/firebase.service";
 
@@ -12,6 +12,7 @@ export class CreateClubComponent implements OnInit {
   fileName: string;
   club: Club;
   alerts: Array<any>;
+  form: FormGroup;
 
   constructor(private firebaseService: FirebaseService) {
     this.club = new Club('', '', null);
@@ -28,6 +29,11 @@ export class CreateClubComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.form = new FormGroup({
+      name: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      file: new FormControl('')
+  });
     this.reset();
   }
 
@@ -35,7 +41,6 @@ export class CreateClubComponent implements OnInit {
     this.fileName = 'Choose file...';
     this.club.file = null;
   }
-
 
   onSubmit(form: NgForm) {
     debugger;
