@@ -42,19 +42,32 @@ export class CreateClubComponent implements OnInit {
     if (form.valid && this.club.file) {
       const newClub = new Club(form.value.name, form.value.description, this.club.file);
       const uploadTask = this.firebaseService.createClub(newClub);
-      uploadTask.on('state_changed', () => {
-        },
+      uploadTask.on('state_changed', () => {},
         (error) => {
-          this.alerts[1].isOpen = true;
+          this.setAlert('danger');
           console.error(error);
         }, () => {
-          this.alerts[0].isOpen = true;
+          this.setAlert('success');
           form.reset();
           this.reset();
         });
     }
     else {
-      this.alerts[1].isOpen = true;
+      this.setAlert('danger');
+    }
+  }
+
+  setAlert(type: string){
+    for (let alert of this.alerts) {
+      alert.isOpen = false;
+    }
+    switch(type) {
+      case 'success':
+        this.alerts[0].isOpen = true;
+        break;
+      case 'danger':
+        this.alerts[1].isOpen = true;
+        break;
     }
   }
 

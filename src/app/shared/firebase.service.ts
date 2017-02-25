@@ -28,7 +28,6 @@ export class FirebaseService {
   }
 
   createClub(club: Club): any{
-    debugger;
     const fileExtension = this.getFileExtension(club.file.name);
     const uniqueID = this.clubs.push({ fileExtension, name: club.name, description: club.description}).key;
     return this.uploadFile(club.file, uniqueID);
