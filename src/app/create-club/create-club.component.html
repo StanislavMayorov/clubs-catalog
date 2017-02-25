@@ -32,7 +32,7 @@
         <div class="form-group">
           <label class="custom-file">
             <input type="file" id="file" class="custom-file-input btn-primary" name="file"
-                   accept="image/*" (change)="fileChange($event)" [ngModel]="file" ValidateFileDirective>
+                   accept="image/*" (change)="fileChange($event)" [ngModel]="file">
             <span class="custom-file-control">{{ fileName }}</span>
           </label>
           <small class="form-text text-muted">Logo will look better if image width is at least 355px.</small>
