@@ -1,3 +1,18 @@
-<p>
-  clubs-list works!
-</p>
+<h1>Clubs list</h1>
+<section *ngFor="let club of clubs">
+  <!--<h2>{{club.name}}</h2>-->
+  <!--<p>-->
+    <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta illo, labore libero necessitatibus quo quod rerum sunt? Deserunt dolores, ea est laboriosam nihil numquam, perspiciatis, quidem quo soluta sunt unde?-->
+    <!--{{club.description}}-->
+  <!--</p>-->
+  <!--<img src="{{club.url}}">-->
+  <div class="card-columns">
+    <div class="card">
+    <img class="card-img-top img-fluid" src="{{club.url}}">
+    <div class="card-block">
+      <h4 class="card-title">{{club.name}}</h4>
+      <p class="card-text">{{club.description}}Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+  </div></div>
+</section>
