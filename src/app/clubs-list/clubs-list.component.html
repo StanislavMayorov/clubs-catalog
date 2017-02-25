@@ -1,11 +1,11 @@
 <h1>Clubs list</h1>
 <section class="card-columns">
-    <div class="card" *ngFor="let club of clubs">
+    <div *ngFor="let club of clubs"><div class="card">
       <img class="card-img-top img-fluid mx-auto" src="{{club.url}}">
       <div class="card-block">
         <h4 class="card-title">{{club.name}}</h4>
         <p class="card-text">{{club.description}} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dolorem doloribus eligendi, obcaecati pariatur quod repellendus sit ut. Blanditiis eos fugiat omnis repellat saepe sapiente, sequi tempore vel veritatis voluptas?.</p>
         <a [routerLink]="['/detail', club.key]" class="btn btn-primary">Show details</a>
       </div>
-    </div>
+    </div></div>
 </section>
