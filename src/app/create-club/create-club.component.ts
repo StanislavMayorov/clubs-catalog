@@ -20,7 +20,7 @@ export class CreateClubComponent implements OnInit {
       type: 'success',
       message: 'New club successfully has been created!',
       isOpen: false
-    },{
+    }, {
       type: 'danger',
       message: 'New club hasn\'t been created!',
       isOpen: false
@@ -31,7 +31,7 @@ export class CreateClubComponent implements OnInit {
     this.reset();
   }
 
-  reset(){
+  reset() {
     this.fileName = 'Choose file...';
     this.club.file = null;
   }
@@ -41,10 +41,17 @@ export class CreateClubComponent implements OnInit {
     debugger;
     if (form.valid && this.club.file) {
       const newClub = new Club(form.value.name, form.value.description, this.club.file);
-      this.firebaseService.createClub(newClub);
-      this.alerts[0].isOpen = true;
-      form.reset();
-      this.reset();
+      const uploadTask = this.firebaseService.createClub(newClub);
+      uploadTask.on('state_changed', () => {
+        },
+        (error) => {
+          this.alerts[1].isOpen = true;
+          console.error(error);
+        }, () => {
+          this.alerts[0].isOpen = true;
+          form.reset();
+          this.reset();
+        });
     }
     else {
       this.alerts[1].isOpen = true;
