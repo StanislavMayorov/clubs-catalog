@@ -19,11 +19,9 @@ export class ClubsListComponent implements OnInit {
   ngOnInit() {
     this.clubsDatabaseObservable = this.firebaseService.getClubs();
     this.clubsDatabaseObservable.subscribe(clubs => {
-      debugger;
       for (let club of clubs) {
         this.firebaseService.getFile(club.$key, club.fileExtension).then(url => {
-          //console.log(url);
-          this.clubs.push({ url, name: club.name, description: club.description,});
+          this.clubs.push({url, name: club.name, description: club.description, key: club.$key});
         }, (error) => {
           console.error(error)
         });
