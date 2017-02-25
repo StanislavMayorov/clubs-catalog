@@ -5,7 +5,7 @@
       <ngb-alert *ngIf="alert.isOpen" [type]="alert.type" (close)="alert.isOpen = false">{{ alert.message }}</ngb-alert>
     </p>
     <!--<ngb-alert type="success">test</ngb-alert>-->
-      <form (ngSubmit)="onSubmit(form)" [formGroup]="form">
+      <form (ngSubmit)="onSubmit(form)" #form="ngForm">
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text"
