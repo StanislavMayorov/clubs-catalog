@@ -1,7 +1,10 @@
 <h1>Create new club</h1>
 <section class="row">
   <div class="col-md-6 offset-md-3 col-sm-10 offset-sm-1 col-12">
-    <section>
+    <p *ngFor="let alert of alerts">
+      <ngb-alert *ngIf="alert.isOpen" [type]="alert.type" (close)="alert.isOpen = false">{{ alert.message }}</ngb-alert>
+    </p>
+    <!--<ngb-alert type="success">test</ngb-alert>-->
       <form (ngSubmit)="onSubmit(form)" #form="ngForm">
         <div class="form-group">
           <label for="name">Name</label>
@@ -36,6 +39,5 @@
         </div>
         <button type="submit" class="btn btn-primary btn-lg" [disabled]="!form.valid">Create</button>
       </form>
-    </section>
   </div>
 </section>
