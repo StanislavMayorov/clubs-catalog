@@ -38,7 +38,6 @@ export class CreateClubComponent implements OnInit {
 
 
   onSubmit(form: NgForm) {
-    debugger;
     if (form.valid && this.club.file) {
       const newClub = new Club(form.value.name, form.value.description, this.club.file);
       const uploadTask = this.firebaseService.createClub(newClub);
