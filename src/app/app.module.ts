@@ -12,6 +12,7 @@ import { ClubDetailComponent } from './club-detail/club-detail.component';
 import { CreateClubComponent } from './create-club/create-club.component';
 import { routing } from "./app.routing";
 import { FirebaseService } from "./shared/firebase.service";
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 export const firebaseConfig = {
@@ -28,7 +29,8 @@ export const firebaseConfig = {
     HeaderComponent,
     ClubsListComponent,
     ClubDetailComponent,
-    CreateClubComponent
+    CreateClubComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
