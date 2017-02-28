@@ -27,18 +27,24 @@ export class ClubDetailComponent implements OnInit {
   loadData() {
     this.firebaseService.getClubs().subscribe(clubs => {
       let club = Array.from(clubs).filter(element => element.$key === this.clubUniqueId).pop();
-      if (!club){
-        this.redirect()
+      if (club) {
+        this.loadFile(club)
       }
-      this.firebaseService.getFile(club.$key, club.fileExtension).then(url => {
-        this.club = {url, name: club.name, description: club.description};
-      }, (error) => {
-        console.error(error);
-      });
+      else {
+        this.redirectToNotFound()
+      }
     });
   }
 
-  redirect(){
+  loadFile(club: any) {
+    this.firebaseService.getFile(club.$key, club.fileExtension).then(url => {
+      this.club = {url, name: club.name, description: club.description};
+    }, (error) => {
+      console.error(error);
+    });
+  }
+
+  redirectToNotFound() {
     this.router.navigate(['/not-found']);
   }
 
