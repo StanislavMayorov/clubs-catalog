@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { NgForm } from "@angular/forms";
+import { NgForm, Form, FormGroup, FormControl, Validators } from "@angular/forms";
 import { Club } from "../shared/club";
 import { FirebaseService } from "../shared/firebase.service";
 
@@ -12,6 +12,7 @@ export class CreateClubComponent implements OnInit {
   fileName: string;
   club: Club;
   alerts: Array<any>;
+  form: FormGroup;
 
   constructor(private firebaseService: FirebaseService) {
     this.club = new Club('', '', null);
@@ -28,27 +29,28 @@ export class CreateClubComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.reset();
-  }
-
-  reset() {
-    this.fileName = 'Choose file...';
-    this.club.file = null;
+    this.form = new FormGroup({
+      name: new FormControl('', Validators.required),
+      description: new FormControl('', [Validators.required]),
+      file: new FormControl('', this.fileValidator.bind(this))
+    });
+    this.resetFilePath();
   }
 
 
   onSubmit(form: NgForm) {
-    if (form.valid && this.club.file) {
+    if (form.valid) {
       const newClub = new Club(form.value.name, form.value.description, this.club.file);
       const uploadTask = this.firebaseService.createClub(newClub);
-      uploadTask.on('state_changed', () => {},
+      uploadTask.on('state_changed', () => {
+        },
         (error) => {
           this.setAlert('danger');
           console.error(error);
         }, () => {
           this.setAlert('success');
           form.reset();
-          this.reset();
+          this.resetFilePath();
         });
     }
     else {
@@ -56,11 +58,11 @@ export class CreateClubComponent implements OnInit {
     }
   }
 
-  setAlert(type: string){
+  setAlert(type: string) {
     for (let alert of this.alerts) {
       alert.isOpen = false;
     }
-    switch(type) {
+    switch (type) {
       case 'success':
         this.alerts[0].isOpen = true;
         break;
@@ -70,9 +72,30 @@ export class CreateClubComponent implements OnInit {
     }
   }
 
+  resetFilePath() {
+    this.fileName = 'Choose file...';
+    this.club.file = null;
+  }
+
+  setFilePath(file: File) {
+    this.fileName = file.name;
+    this.club.file = file;
+  }
+
   fileChange(fileInputEvent: any) {
-    this.fileName = fileInputEvent.currentTarget.files[0].name;
-    this.club.file = fileInputEvent.currentTarget.files[0];
+    this.form.controls['file'].updateValueAndValidity();
+  }
+
+  fileValidator(control: FormControl): {[key: string]: boolean} {
+    const files = (<HTMLInputElement>document.getElementById('file')).files;
+    if (files.length !== 0 && (/.(gif|jpg|jpeg|png|svg)$/i).test(files[0].name)) {
+      this.setFilePath(files[0]);
+      return null
+    }
+    else {
+      this.resetFilePath();
+      return {error: true};
+    }
   }
 
 }
