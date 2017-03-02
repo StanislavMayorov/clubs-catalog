@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { NgForm, Form, FormGroup, FormControl, Validators } from "@angular/forms";
 import { Club } from "../shared/club";
 import { FirebaseService } from "../shared/firebase.service";
@@ -13,6 +13,8 @@ export class CreateClubComponent implements OnInit {
   club: Club;
   alerts: Array<any>;
   form: FormGroup;
+  @ViewChild('file')
+  fileInput: ElementRef;
 
   constructor(private firebaseService: FirebaseService) {
     this.club = new Club('', '', null);
@@ -87,7 +89,7 @@ export class CreateClubComponent implements OnInit {
   }
 
   fileValidator(control: FormControl): {[key: string]: boolean} {
-    const files = (<HTMLInputElement>document.getElementById('file')).files;
+    const files = this.fileInput.nativeElement.files;
     if (files.length !== 0 && (/.(gif|jpg|jpeg|png|svg)$/i).test(files[0].name)) {
       this.setFilePath(files[0]);
       return null
