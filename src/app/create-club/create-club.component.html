@@ -4,39 +4,56 @@
     <p *ngFor="let alert of alerts">
       <ngb-alert *ngIf="alert.isOpen" [type]="alert.type" (close)="alert.isOpen = false">{{ alert.message }}</ngb-alert>
     </p>
-      <form (ngSubmit)="onSubmit(form)" [formGroup]="form">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text"
-                 class="form-control"
-                 required
-                 id="name"
-                 name="name"
-                 formControlName="name"
+    <form (ngSubmit)="onSubmit(form)" [formGroup]="form">
+      <div class="form-group has-error"
+           [ngClass]="{
+             'has-danger': form.controls['name'].invalid,
+             'has-success': form.controls['name'].valid
+             }">
+        <label class="form-control-label" for="name">Name</label>
+        <input type="text"
+               class="form-control"
+               required
+               id="name"
+               formControlName="name"
+        >
+      </div>
+      <div class="form-group"
+           [ngClass]="{
+             'has-danger': form.controls['description'].invalid,
+             'has-success': form.controls['description'].valid
+             }"
+      >
+        <label class="form-control-label" for="description">Description</label>
+        <textarea type="text"
+                  class="form-control"
+                  required
+                  id="description"
+                  rows="5"
+                  formControlName="description"
+        ></textarea>
+      </div>
+      <div class="form-group"
+           [ngClass]="{
+             'has-danger': form.controls['file'].invalid,
+             'has-success': form.controls['file'].valid
+             }"
+      >
+        <label class="form-control-label" for="file">Logo</label>
+        <label class="custom-file form-control">
+          <input type="file"
+                 id="file"
+                 #file
+                 class="custom-file-input btn-primary"
+                 accept="image/*"
+                 (change)="fileChange($event)"
+                 formControlName="file"
           >
-        </div>
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea type="text"
-                    class="form-control"
-                    required
-                    id="description"
-                    rows="5"
-                    name="description"
-                    formControlName="description"
-
-          ></textarea>
-        </div>
-        <div class="form-group">
-          <label for="file">Logo</label>
-          <label class="custom-file">
-            <input type="file" id="file" #file class="custom-file-input btn-primary" name="file"
-                   accept="image/*" (change)="fileChange($event)" formControlName="file">
-            <span class="custom-file-control">{{ fileName }}</span>
-          </label>
-          <small class="form-text text-muted">Logo will look better if image width is at least 355px.</small>
-        </div>
-        <button type="submit" class="btn btn-primary btn-lg" [disabled]="!form.valid">Create</button>
-      </form>
+          <span class="custom-file-control">{{ fileName }}</span>
+        </label>
+        <small class="form-text text-muted">Logo will look better if image width is at least 355px.</small>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg" [disabled]="!form.valid">Create</button>
+    </form>
   </div>
 </section>
